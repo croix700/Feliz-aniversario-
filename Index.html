@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Aniversário ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&family=Dancing+Script&display=swap" rel="stylesheet">
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  position:relative;
+  background:#000;
+  color:white;
+}
+
+/* FUNDO ANIMADO */
+#background{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-1;
+  background:#000;
+  overflow:hidden;
+}
+.star, .heartShape{
+  position:absolute;
+  border-radius:50%;
+  opacity:0.8;
+}
+.star{
+  width:2px;
+  height:2px;
+  background:#ff9ce0;
+  animation: moveStar 10s linear infinite;
+}
+.heartShape{
+  width:8px;
+  height:8px;
+  background:#ff4d6d;
+  transform:rotate(45deg);
+  animation: moveHeart 12s linear infinite;
+}
+@keyframes moveStar{
+  0%{transform:translateY(0) translateX(0);}
+  100%{transform:translateY(-1000px) translateX(500px);}
+}
+@keyframes moveHeart{
+  0%{transform:translateY(0) translateX(0) rotate(45deg);}
+  100%{transform:translateY(-1200px) translateX(300px) rotate(45deg);}
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(45deg,#ff4d6d,#ff8fa3);
+  animation: gradientMove 10s ease infinite;
+}
+@keyframes gradientMove {
+  0%{background:linear-gradient(45deg,#ff4d6d,#ff8fa3);}
+  50%{background:linear-gradient(45deg,#ff8fa3,#ffd06d);}
+  100%{background:linear-gradient(45deg,#ff4d6d,#ff8fa3);}
+}
+.hero h1{
+  font-size:3.5em;
+  font-family:'Playfair Display';
+  margin:0;
+  background:linear-gradient(to right,#fff700,#ff4d6d,#ff8fa3);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+@keyframes textGlow{
+  0%{text-shadow:0 0 5px #fff700;}
+  100%{text-shadow:0 0 25px #ff8fa3;}
+}
+
+.btn{
+  margin-top:20px;
+  padding:15px 30px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff4d6d;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:1.2em;
+  box-shadow:0 0 20px #ff4d6d;
+  transition:0.3s;
+  position:relative;
+  z-index:2;
+}
+.btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 40px #ff8fa3;
+}
+
+/* SEÇÕES */
+.section{
+  padding:80px 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(30px);
+  transition: all 1s ease-out;
+}
+.section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.section h2{
+  font-family:'Playfair Display';
+  font-size:3em;
+  margin-bottom:20px;
+  color:#ff4d6d;
+  animation: bounce 1s ease;
+}
+@keyframes bounce{
+  0%{transform:translateY(-20px);}
+  50%{transform:translateY(10px);}
+  100%{transform:translateY(0);}
+}
+.section p{
+  max-width:800px;
+  margin:20px auto;
+  font-size:1.3em;
+  line-height:1.6em;
+  white-space:pre-line;
+  background:linear-gradient(90deg,#ff4d6d,#ff8fa3);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* PLAYER BOX */
+#playerBox{
+  width:300px;
+  height:180px;
+  background:#ff8fa3;
+  border-radius:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:0 0 20px #ff4d6d;
+  margin:0 auto 40px auto;
+  transition:0.3s;
+}
+#playerBox:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px #fff700;
+}
+
+/* CARTAS */
+.card{
+  width:80%;
+  max-width:700px;
+  background:#1a001a;
+  border:3px solid #ff8fa3;
+  border-radius:20px;
+  padding:30px;
+  margin:40px auto;
+  box-shadow:0 0 30px #ff4d6d;
+  transition:0.5s;
+}
+.card:hover{
+  transform:scale(1.02);
+  box-shadow:0 0 50px #fff700;
+}
+.cardContent{
+  display:none;
+  margin-top:20px;
+  font-size:1.2em;
+  line-height:1.6em;
+  color:#ffd06d;
+}
+
+/* CORAÇÕES EXPLOSÃO */
+.explosionHeart{
+  position:absolute;
+  font-size:25px;
+  color:#ff4d6d;
+  animation: explodeHeart 1s forwards;
+  z-index:10;
+}
+@keyframes explodeHeart{
+  0%{opacity:1; transform:scale(0.5) translate(0,0);}
+  100%{opacity:0; transform:scale(2) translate(var(--x), var(--y));}
+}
+
+/* AVISOS */
+.alertBox{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,105,180,0.9);
+  padding:20px 30px;
+  border-radius:15px;
+  box-shadow:0 0 30px #ff4d6d;
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  z-index:999;
+  display:none;
+  animation: pop 0.5s ease-out;
+}
+@keyframes pop{
+  0%{transform:translateX(-50%) scale(0.5);}
+  100%{transform:translateX(-50%) scale(1);}
+}
+</style>
+</head>
+<body>
+
+<div id="background"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Feliz Aniversário ❤️</h1>
+  <button class="btn">Feliz aniversário amor!💓 Eu te amo muito e dediquei cada detalhe para você, me emocionei fazendo e espero que goste 🥹💓</button>
+</section>
+
+<!-- MÚSICA TRIBALISTA -->
+<section class="section">
+  <h2>Música Tribalista 🎵</h2>
+  <div id="playerBox">
+    <span style="color:white; font-weight:bold; font-size:1.2em;">Clique para tocar a música Tribalista</span>
+  </div>
+  <div id="ytPlayer" style="display:none; text-align:center; margin-top:20px;">
+    <iframe width="300" height="180"
+      src="https://www.youtube.com/embed/3JiMr-HgHJ8?autoplay=0"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+</section>
+
+<!-- CARTA SOBRE MINHA PRINCESA -->
+<section class="section">
+  <div class="card" id="princesaCard">
+    <h2 style="color:#ff8fa3;">Sobre Minha Princesa 💌</h2>
+    <p style="color:white;">Clique para abrir a carta</p>
+    <div class="cardContent" id="princesaContent">
+      <p>Ela é incrível, linda, perfeita, maravilhosa e especial. Ela gosta de pastel e eu a amo muito. Ela tem um brilho nos olhos igual o brilho das estrelas, e seu cabelo me encanta. Minha namorada merece o mundo, a lua, o universo e todo o meu amor.</p>
+      <hr style="border:1px solid #ff4d6d; margin:20px 0;">
+      <p>Mesmo que a distância impeça um abraço ou um beijo, nada vai impedir meus sentimentos por você. Eu te amo muito e queria poder te dedicar tudo de bom neste universo, músicas, artes e momentos especiais.</p>
+    </div>
+    <button class="btn" id="princesaBtn">Abrir/Fechar Carta</button>
+  </div>
+</section>
+
+<!-- CARTA GIGANTE PARA O MEU AMOR -->
+<section class="section">
+  <div class="card" id="amorCard">
+    <h2 style="color:#ff8fa3;">Carta gigante para o meu amor 💌</h2>
+    <p style="color:white;">Clique para abrir a carta</p>
+    <div class="cardContent" id="amorContent">
+      <p>Meu amor, quero escrever tudo o que sinto por você, cada detalhe, cada momento que compartilhamos, cada sorriso que você me dá e cada abraço que aquece meu coração. Você é a razão da minha felicidade, meu porto seguro e minha inspiração. Cada dia ao seu lado é único e especial, e quero que nosso amor continue crescendo, repleto de aventuras, alegrias e sonhos realizados juntos.</p>
+      <p>Eu amo a sua forma de olhar para a vida, o jeito que me entende mesmo quando não digo nada, a paciência e a doçura que você possui. Não existe ninguém no mundo que consiga substituir o lugar que você ocupa no meu coração. Você é minha melhor amiga, minha confidente e meu amor eterno.</p>
+      <p>Mesmo nos dias difíceis, nosso amor se mantém firme. Eu prometo estar ao seu lado, apoiar seus sonhos e lutar para que sejamos sempre felizes. Que possamos continuar celebrando a vida, viajando, rindo e construindo memórias inesquecíveis. Te amo com toda minha alma e mais do que palavras podem expressar. 💖</p>
+      <p>Lembro de cada risada, cada brincadeira, cada noite acordados conversando sobre tudo e sobre nada. Lembro de quando você sorriu para mim de um jeito que fez meu coração disparar e percebi que nada no mundo poderia ser mais perfeito que aquele momento. Quero viver muitos outros assim, infinitos e cheios de amor.</p>
+      <p>Prometo cuidar de você, respeitar seus sentimentos, apoiar seus sonhos e celebrar cada conquista sua como se fosse minha. Quero te ver feliz, realizada e amada todos os dias da nossa vida. Que nossos caminhos continuem entrelaçados, e que possamos juntos superar qualquer obstáculo, rindo, aprendendo e crescendo lado a lado.</p>
+      <p>Meu amor, você é minha poesia, minha canção favorita, minha estrela-guia. Sem você, o mundo perde a cor, a alegria e o brilho. Com você, tudo é mais bonito, mais intenso, mais verdadeiro. Obrigado por ser você, por me amar e por me deixar te amar do jeito que sempre sonhei. 💓</p>
+      <p>Quero envelhecer com você, lembrar de cada momento que passamos, e mesmo com o tempo, continuar me apaixonando por você todos os dias. Que possamos sempre ter nossas conversas, nossos passeios, nossas risadas, nossos abraços apertados e nossos sonhos compartilhados. Você é meu tudo, meu presente e meu futuro.</p>
+      <p>Te amo, te admiro, te quero e vou te querer para sempre, com cada pedaço do meu coração. Que esta carta seja só uma pequena prova do quanto você significa para mim e do quanto quero te ver feliz todos os dias da nossa vida juntos.</p>
+      <p>Eu me emocionei fazendo cada linha dessa carta, pensando em cada detalhe do nosso amor, lembrando de cada sorriso seu, de cada gesto que aqueceu meu coração. Tudo foi feito com dedicação, carinho e amor, e espero que você sinta isso enquanto lê. 🥹💓</p>
+      <p>Quero que saiba que tudo que escrevi aqui foi feito com meu coração aberto, e cada palavra foi pensada com o maior carinho do mundo. Que nosso amor continue crescendo e florescendo, e que possamos celebrar cada dia como se fosse único. Você é minha vida, minha alegria e meu maior tesouro. 💖💌</p>
+      <p>Para sempre seu, com amor eterno e um coração que bate só por você. Que nunca nos falte motivos para sorrir, motivos para sonhar e motivos para amar ainda mais. Te amo infinitamente, e cada momento com você é um presente que eu guardo com muito amor.</p>
+    </div>
+    <button class="btn" id="amorBtn">Abrir/Fechar Carta</button>
+  </div>
+</section>
+
+<!-- ALERT BOX -->
+<div id="alertBox" class="alertBox"></div>
+
+<script>
+// FUNDO ANIMADO
+const background = document.getElementById('background');
+for(let i=0;i<100;i++){
+  const star = document.createElement('div');
+  star.className='star';
+  star.style.left=Math.random()*100+'%';
+  star.style.top=Math.random()*100+'%';
+  background.appendChild(star);
+
+  const heart = document.createElement('div');
+  heart.className='heartShape';
+  heart.style.left=Math.random()*100+'%';
+  heart.style.top=Math.random()*100+'%';
+  background.appendChild(heart);
+}
+
+// SCROLL ANIMATION
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', ()=>{
+  sections.forEach(sec=>{
+    const top = sec.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    if(top < windowHeight - 100){
+      sec.classList.add('visible');
+    }
+  });
+});
+
+// FUNÇÃO PARA ALERTAS
+function showAlert(msg){
+  const alertBox = document.getElementById('alertBox');
+  alertBox.innerHTML = msg;
+  alertBox.style.display = 'block';
+  setTimeout(()=>{ alertBox.style.display='none'; },4000);
+}
+
+// MÚSICA TRIBALISTA
+let musicClickCount = 0;
+const playerBox = document.getElementById('playerBox');
+const ytPlayer = document.getElementById('ytPlayer');
+playerBox.addEventListener('click', ()=>{
+  musicClickCount++;
+  if(musicClickCount===1){
+    showAlert("💖 Clique novamente para tocar a música Tribalista 💖");
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+  if(musicClickCount===2){
+    ytPlayer.style.display='block';
+    playerBox.style.display='none';
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+});
+
+// CARTAS
+document.getElementById('princesaBtn').addEventListener('click', ()=>{
+  const content = document.getElementById('princesaContent');
+  content.style.display = content.style.display==='block' ? 'none' : 'block';
+});
+document.getElementById('amorBtn').addEventListener('click', ()=>{
+  const content = document.getElementById('amorContent');
+  content.style.display = content.style.display==='block' ? 'none' : 'block';
+});
+
+// CORAÇÕES EXPLOSÃO
+document.querySelector('.hero .btn').addEventListener('click', ()=>{
+  window.scrollTo({ top: playerBox.offsetTop, behavior:'smooth' });
+  for(let i=0;i<30;i++){
+    const heart=document.createElement('div');
+    heart.className='explosionHeart';
+    heart.innerText='💖';
+    const x=Math.random()*400-200+'px';
+    const y=Math.random()*400-200+'px';
+    heart.style.setProperty('--x',x);
+    heart.style.setProperty('--y',y);
+    heart.style.left='50%';
+    heart.style.top='50%';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),1000);
+  }
+});
+</script>
+</body>
+</html>
